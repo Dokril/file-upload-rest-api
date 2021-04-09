@@ -26,15 +26,18 @@ export class FileService {
   }
 
   async changeDeleteStatus(id: string, isDelete: boolean) {
-    const changedDocument = await this.fileModel.findByIdAndUpdate(id, {
-      isDelete,
-    });
+    const changedDocument = await this.fileModel.findByIdAndUpdate(
+      id,
+      { isDelete },
+      { new: true },
+    );
+
     if (!changedDocument) {
       throw new Error(`File ${id} not found!`);
     }
 
     this.logger.log(
-      `File id: ${changedDocument?.id} isDelete = ${changedDocument?.isDelete}`,
+      `File id: ${changedDocument.id} isDelete = ${changedDocument.isDelete}`,
     );
   }
 
